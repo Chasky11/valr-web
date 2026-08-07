@@ -1,17 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import { CartProvider } from "@/components/cart/cart-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "VÄLR — Forja tu legado",
+    default: "VÄLR — Forjados para avanzar",
     template: "%s | VÄLR",
   },
   description:
-    "Una experiencia digital nacida del norte: estrategia, diseño y tecnología forjados para dejar huella.",
+    "Ropa deportiva de alto rendimiento inspirada en la fuerza, los símbolos y los paisajes del norte.",
   openGraph: {
-    title: "VÄLR — Forja tu legado",
+    title: "VÄLR — Forjados para avanzar",
     description:
-      "Estrategia, diseño y tecnología forjados con la precisión del norte.",
+      "Ropa deportiva técnica inspirada en la mitología nórdica.",
     type: "website",
     locale: "es_ES",
   },
@@ -26,7 +27,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body><CartProvider>{children}</CartProvider></body>
     </html>
   );
 }

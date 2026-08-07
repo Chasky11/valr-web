@@ -1,7 +1,7 @@
-import { FinalCta } from "@/components/sections/final-cta";
-import { ForgeProcess } from "@/components/sections/forge-process";
-import { Hero } from "@/components/sections/hero";
-import { Pillars } from "@/components/sections/pillars";
+import { BrandStory } from "@/components/sections/brand-story";
+import { CategoryGrid } from "@/components/sections/category-grid";
+import { FeaturedProducts } from "@/components/sections/featured-products";
+import { StoreHero } from "@/components/sections/store-hero";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -9,10 +9,10 @@ export default function HomePage() {
   return (
     <main>
       <SiteHeader />
-      <Hero />
-      <Pillars />
-      <ForgeProcess />
-      <FinalCta />
+      <StoreHero />
+      <FeaturedProducts />
+      <CategoryGrid />
+      <BrandStory />
       <SiteFooter />
     </main>
   );
