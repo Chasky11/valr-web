@@ -48,6 +48,30 @@ export const products: Product[] = [
     description: "Una jinete atraviesa el paso de montaña bajo el resplandor del norte. Fuerza serena en verde profundo.",
     details: ["Algodón premium de 240 g/m²", "Corte oversized unisex", "Ilustración trasera de gran formato"],
   },
+  {
+    slug: "jormungandr-oversized-tee",
+    name: "Jörmungandr Oversized Tee",
+    category: "Camiseta gráfica oversized",
+    gender: "Unisex",
+    price: 39.9,
+    image: "/images/jormungandr-tee-v1.webp",
+    imagePosition: "50% 50%",
+    color: "Borgoña profundo · #451717",
+    description: "La serpiente del mundo emerge del mar bajo un sol eclipsado. Una pieza de presencia intensa en borgoña profundo.",
+    details: ["Algodón premium de 240 g/m²", "Corte oversized unisex", "Color #451717 · Serigrafía frontal y trasera"],
+  },
+  {
+    slug: "skadi-oversized-tee",
+    name: "Skaði Oversized Tee",
+    category: "Camiseta gráfica oversized",
+    gender: "Unisex",
+    price: 39.9,
+    image: "/images/skadi-tee-v1.webp",
+    imagePosition: "50% 50%",
+    color: "Azul noche · #202863",
+    description: "La cazadora del invierno avanza entre cumbres y luna creciente. Precisión y carácter sobre azul noche.",
+    details: ["Algodón premium de 240 g/m²", "Corte oversized unisex", "Color #202863 · Tinta al agua de alta resistencia"],
+  },
 ];
 
 export function getProduct(slug: string) {
