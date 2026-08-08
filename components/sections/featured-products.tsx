@@ -4,11 +4,16 @@ import { products } from "@/lib/products";
 
 export function FeaturedProducts() {
   return (
-    <section className="shop-section" id="novedades">
-      <div className="shell">
-        <div className="shop-heading"><div><p className="eyebrow dark"><span /> Saga 01 · Recién forjado</p><h2>Camisetas<br/><em>con historia.</em></h2></div><Link href="/coleccion" className="underlined-link">Ver toda la colección →</Link></div>
-        <div className="product-grid">{products.map((product) => <ProductCard product={product} key={product.slug} />)}</div>
-      </div>
-    </section>
+    <>
+      <section className="drop-transition" aria-label="Drop 01 The Awakening">
+        <div className="shell drop-transition-inner"><span>VÄLR / 2026</span><p>Drop 01 <i>·</i> The Awakening</p><span>Forged in the north</span></div>
+      </section>
+      <section className="shop-section" id="novedades">
+        <div className="shell">
+          <div className="shop-heading"><div><p className="eyebrow"><span /> Saga 01 · Recién forjado</p><h2>Camisetas<br/><em>con historia.</em></h2></div><Link href="/coleccion" className="underlined-link">Ver toda la colección →</Link></div>
+          <div className="product-grid">{products.map((product) => <ProductCard product={product} key={product.slug} />)}</div>
+        </div>
+      </section>
+    </>
   );
 }

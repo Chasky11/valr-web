@@ -14,7 +14,7 @@ export function SiteHeader() {
     <header className="site-header">
       <p className="announcement">Envío gratuito en pedidos superiores a 90 €</p>
       <div className="shell header-inner">
-        <Link href="#inicio" className="logo-link" aria-label="VÄLR, inicio">
+        <Link href="/" className="logo-link" aria-label="VÄLR, inicio">
           <ValrMark />
         </Link>
         <nav aria-label="Navegación principal">
