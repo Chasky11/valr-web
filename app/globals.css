@@ -27,7 +27,8 @@ button { color: inherit; }
 .announcement { height: 28px; display: grid; place-items: center; margin: 0; color: var(--ink); background: var(--gold); font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
 .header-inner { height: 78px; display: flex; align-items: center; justify-content: space-between; padding-inline: 18px; border-bottom: 1px solid var(--line); background: rgba(7,16,14,.52); backdrop-filter: blur(10px); }
 .brand-mark { display: inline-flex; align-items: center; gap: 11px; color: var(--bone); font-size: 1.04rem; font-weight: 700; letter-spacing: .32em; }
-.brand-mark svg { width: 30px; fill: none; stroke: var(--gold); stroke-width: 1.35; }
+.valr-sigil { overflow: visible; color: var(--gold); stroke: currentColor; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.brand-mark svg { width: 24px; height: 33px; flex: 0 0 auto; }
 .nav-list { display: flex; align-items: center; gap: 34px; margin: 0; padding: 0; list-style: none; color: var(--mist); font-size: .64rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .nav-list a, .icon-link, .cart-link { transition: color .2s ease, opacity .2s ease; }
 .nav-list a:hover, .icon-link:hover, .cart-link:hover { color: var(--gold); }
@@ -49,6 +50,7 @@ button { color: inherit; }
 .store-hero-image { object-fit: cover; object-position: center; }
 .store-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4,10,8,.92) 0%, rgba(4,10,8,.65) 34%, rgba(4,10,8,.12) 67%, rgba(4,10,8,.18) 100%); }
 .store-hero-content { position: relative; z-index: 2; padding-top: 90px; }
+.store-hero-sigil { width: 34px; height: 47px; margin-bottom: 24px; opacity: .92; }
 .store-hero-content h1, .shop-heading h2, .story-copy h2, .collection-hero h1, .product-detail h1, .cart-page h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -.055em; line-height: .92; }
 .store-hero-content h1 { max-width: 700px; font-size: clamp(4.8rem, 8.1vw, 8.2rem); }
 .store-hero-content h1 em, .shop-heading h2 em, .story-copy h2 em, .cart-page h1 em { color: var(--gold); font-weight: 400; }
@@ -145,7 +147,7 @@ button { color: inherit; }
 
 @media (max-width: 700px) {
   :root { --shell: calc(100vw - 28px); }
-  .announcement { font-size: .5rem; }.header-inner { height: 68px; }.brand-mark { font-size: .88rem; }.brand-mark svg { width: 26px; }
+  .announcement { font-size: .5rem; }.header-inner { height: 68px; }.brand-mark { font-size: .88rem; }.brand-mark svg { width: 21px; height: 29px; }
   .store-hero { min-height: 780px; align-items: flex-end; }.store-hero-image { object-position: 66% center; }.store-hero-shade { background: linear-gradient(0deg, rgba(4,10,8,.96) 0%, rgba(4,10,8,.3) 74%); }.store-hero-content { padding: 0 0 90px; }.store-hero-content h1 { font-size: clamp(3.6rem, 17vw, 5.3rem); }.store-hero-content > p:not(.eyebrow) { font-size: .9rem; }.hero-actions { align-items: flex-start; flex-direction: column; }.hero-drop { display: none; }
   .shop-section { padding: 90px 0; }.shop-heading { align-items: flex-start; flex-direction: column; margin-bottom: 40px; }.shop-heading h2 { font-size: 3.3rem; }.product-grid { grid-template-columns: 1fr; gap: 50px; }.product-image { height: 530px; }
   .category-grid { grid-template-columns: 1fr; }.category-card { min-height: 610px; }.category-card > div { padding: 30px; }.category-card h2 { font-size: 3.7rem; }
