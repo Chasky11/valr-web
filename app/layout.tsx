@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={displayFont.variable}>
+    <html lang="es" className={displayFont.variable} data-scroll-behavior="smooth">
       <body><MotionController /><CartProvider>{children}</CartProvider></body>
     </html>
   );

@@ -12,8 +12,12 @@ export function MotionController() {
     const parallaxElements = new Set(document.querySelectorAll<HTMLElement>(PARALLAX_SELECTOR));
     const header = document.querySelector<HTMLElement>(".site-header");
 
+    const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 32);
+
     if (reduceMotion.matches) {
-      return;
+      updateHeader();
+      window.addEventListener("scroll", updateHeader, { passive: true });
+      return () => window.removeEventListener("scroll", updateHeader);
     }
 
     root.classList.add("motion-ready");
@@ -58,7 +62,7 @@ export function MotionController() {
     const updateScrollEffects = () => {
       const viewportCenter = window.innerHeight / 2;
 
-      header?.classList.toggle("is-scrolled", window.scrollY > 32);
+      updateHeader();
       parallaxElements.forEach((element) => {
         if (!element.isConnected) {
           parallaxElements.delete(element);
