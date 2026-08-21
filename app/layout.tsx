@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { CartProvider } from "@/components/cart/cart-provider";
+import { MotionController } from "@/components/motion-controller";
 import "./globals.css";
 
 const displayFont = localFont({
@@ -35,7 +36,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={displayFont.variable}>
-      <body><CartProvider>{children}</CartProvider></body>
+      <body><MotionController /><CartProvider>{children}</CartProvider></body>
     </html>
   );
 }

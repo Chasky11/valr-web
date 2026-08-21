@@ -23,7 +23,7 @@ export function ProductGallery({ image, name, color, imagePosition }: ProductGal
   const activeLabel = views.find(({ id }) => id === activeView)?.label ?? views[0].label;
 
   return (
-    <section className="product-gallery" aria-label={`Galería de ${name}`}>
+    <section className="product-gallery" aria-label={`Galería de ${name}`} data-reveal="image">
       <div id="product-gallery-panel" role="tabpanel" aria-labelledby={`gallery-tab-${activeView}`} className={`product-gallery-stage view-${activeView}`}>
         <Image
           src={image}
