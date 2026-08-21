@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ValrMark } from "@/components/brand/valr-mark";
 import { CartButton } from "@/components/cart/cart-button";
+import { MobileMenu } from "@/components/mobile-menu";
 
 const navigation = [
   { href: "/coleccion", label: "Novedades" },
@@ -33,6 +34,7 @@ export function SiteHeader() {
           <CartButton />
         </div>
       </div>
+      <MobileMenu navigation={navigation} />
     </header>
   );
 }

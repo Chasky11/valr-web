@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">VÄLR sigil</title>
+  <desc id="desc">Official VÄLR interwoven diamond sigil for garment printing.</desc>
+  <g
+    fill="none"
+    stroke="#F2EFE8"
+    stroke-width="44"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M600 150 900 500 600 850 300 500 600 150Z" />
+    <path d="M600 325 840 635 600 1000 360 635 600 325Z" />
+    <path d="m390 310 420 665" />
+    <path d="m810 310-420 665" />
+  </g>
+</svg>

@@ -1,6 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import { CartProvider } from "@/components/cart/cart-provider";
+import { MotionController } from "@/components/motion-controller";
 import "./globals.css";
+
+const displayFont = localFont({
+  src: "./fonts/Iceland-Regular.ttf",
+  weight: "400",
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -26,8 +35,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es">
-      <body><CartProvider>{children}</CartProvider></body>
+    <html lang="es" className={displayFont.variable} data-scroll-behavior="smooth">
+      <body><MotionController /><CartProvider>{children}</CartProvider></body>
     </html>
   );
 }

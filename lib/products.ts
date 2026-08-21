@@ -24,7 +24,7 @@ export const products: Product[] = [
     color: "Negro obsidiana",
     swatch: "#0b0b0b",
     description: "Dos cuervos sobrevuelan el eclipse del norte. Una pieza de corte amplio creada para moverse dentro y fuera del entrenamiento.",
-    details: ["Algodón premium de 240 g/m²", "Corte oversized unisex", "Serigrafía frontal y trasera"],
+    details: ["AS Colour 5082 · Algodón de 240 g/m²", "Corte boxy oversized", "Impresión DTG frontal y trasera"],
   },
   {
     slug: "thorr-oversized-tee",

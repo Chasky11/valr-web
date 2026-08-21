@@ -21,7 +21,7 @@ export default async function ProductPage({ params }: { params: Promise<{slug: s
       <SiteHeader />
       <section className="product-page">
         <ProductGallery image={product.image} name={product.name} color={product.color} imagePosition={product.imagePosition} />
-        <div className="product-detail">
+        <div className="product-detail" data-reveal="up" data-reveal-delay="100">
           <Link href="/coleccion" className="back-link">← Volver a la colección</Link>
           <p className="product-kicker">{product.gender} · {product.category}</p>
           <h1>{product.name}</h1>
@@ -34,7 +34,7 @@ export default async function ProductPage({ params }: { params: Promise<{slug: s
       </section>
       <section className="related-section">
         <div className="shell">
-          <div className="related-heading"><div><p className="eyebrow"><span /> Continúa la saga</p><h2>Otras piezas<br/><em>del despertar.</em></h2></div><Link href="/coleccion" className="underlined-link">Ver colección completa →</Link></div>
+          <div className="related-heading" data-reveal="up"><div><p className="eyebrow"><span /> Continúa la saga</p><h2>Otras piezas<br/><em>del despertar.</em></h2></div><Link href="/coleccion" className="underlined-link">Ver colección completa →</Link></div>
           <div className="product-grid related-grid">{relatedProducts.map((relatedProduct) => <ProductCard product={relatedProduct} key={relatedProduct.slug} />)}</div>
         </div>
       </section>

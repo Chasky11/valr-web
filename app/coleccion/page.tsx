@@ -22,11 +22,11 @@ export default async function CollectionPage({ searchParams }: { searchParams: P
         </div>
       </section>
       <section className="drop-transition collection-transition" aria-label="Drop 01 The Awakening">
-        <div className="shell drop-transition-inner"><span>VÄLR / 2026</span><p>Drop 01 <i>·</i> The Awakening</p><span>Five pieces</span></div>
+        <div className="shell drop-transition-inner" data-reveal="fade"><span>VÄLR / 2026</span><p>Drop 01 <i>·</i> The Awakening</p><span>Five pieces</span></div>
       </section>
       <section className="collection-body">
         <div className="shell">
-          <div className="collection-toolbar">
+          <div className="collection-toolbar" data-reveal="up">
             <p>{visibleProducts.length} {visibleProducts.length === 1 ? "pieza" : "piezas"}</p>
             <nav aria-label="Filtrar colección">
               <Link className={!gender ? "active" : ""} href="/coleccion">Todos</Link>
@@ -34,7 +34,7 @@ export default async function CollectionPage({ searchParams }: { searchParams: P
               <Link className={gender === "mujer" ? "active" : ""} href="/coleccion?genero=mujer">Mujer</Link>
             </nav>
           </div>
-          <div className="product-grid">{visibleProducts.map((product) => <ProductCard product={product} key={product.slug} />)}</div>
+          <div className="product-grid">{visibleProducts.map((product, index) => <ProductCard product={product} index={index} key={product.slug} />)}</div>
         </div>
       </section>
       <SiteFooter />
