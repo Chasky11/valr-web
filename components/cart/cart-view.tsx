@@ -2,14 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useCart } from "@/components/cart/cart-provider";
 import { formatPrice, products } from "@/lib/products";
 
 const FREE_SHIPPING_LIMIT = 90;
 
-export function CartView() {
+type CartViewProps = {
+  checkoutEnabled: boolean;
+};
+
+export function CartView({ checkoutEnabled }: CartViewProps) {
   const { items, isReady, removeItem, updateQuantity, clearCart } = useCart();
+  const [checkoutState, setCheckoutState] = useState<"idle" | "loading" | "error">("idle");
+  const [checkoutError, setCheckoutError] = useState("");
   const lines = useMemo(() => items.flatMap((item) => {
     const product = products.find(({ slug }) => slug === item.slug);
     return product ? [{ ...item, product }] : [];
@@ -18,6 +24,31 @@ export function CartView() {
   const subtotal = lines.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
   const shippingRemaining = Math.max(0, FREE_SHIPPING_LIMIT - subtotal);
   const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_LIMIT) * 100);
+
+  async function handleCheckout() {
+    if (!checkoutEnabled || checkoutState === "loading") return;
+    setCheckoutState("loading");
+    setCheckoutError("");
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      const payload: unknown = await response.json();
+      const result = payload && typeof payload === "object" ? payload as { checkoutUrl?: unknown; error?: unknown } : {};
+
+      if (!response.ok || typeof result.checkoutUrl !== "string") {
+        throw new Error(typeof result.error === "string" ? result.error : "No hemos podido preparar el pago.");
+      }
+
+      window.location.assign(result.checkoutUrl);
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : "No hemos podido preparar el pago.");
+      setCheckoutState("error");
+    }
+  }
 
   if (!isReady) {
     return (
@@ -90,12 +121,16 @@ export function CartView() {
                 <div><span>Impuestos</span><strong>Incluidos</strong></div>
                 <hr />
                 <div className="total"><span>Total</span><strong>{formatPrice(subtotal)}</strong></div>
-                <button disabled>Finalizar compra · Próximamente</button>
-                <p className="checkout-note">El pago seguro se conectará en la siguiente fase.</p>
+                <button type="button" onClick={handleCheckout} disabled={!checkoutEnabled || checkoutState === "loading"}>
+                  {checkoutState === "loading" ? "Preparando pago seguro…" : checkoutEnabled ? "Finalizar compra →" : "Checkout en configuración"}
+                </button>
+                <p className={`checkout-note${checkoutError ? " error" : ""}`} role={checkoutError ? "alert" : undefined}>
+                  {checkoutError || (checkoutEnabled ? "Continuarás al pago seguro de Shopify." : "Falta vincular las variantes publicadas en Shopify.")}
+                </p>
                 <ul>
                   <li>Devoluciones durante 30 días</li>
                   <li>Envío con seguimiento</li>
-                  <li>Pago cifrado en la próxima fase</li>
+                  <li>Pago seguro y cifrado por Shopify</li>
                 </ul>
               </aside>
             </div>
