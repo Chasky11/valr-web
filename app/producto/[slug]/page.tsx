@@ -9,15 +9,53 @@ import { SiteHeader } from "@/components/site-header";
 import { formatPrice, getProduct, products } from "@/lib/products";
 
 export function generateStaticParams() { return products.map(({ slug }) => ({ slug })); }
-export async function generateMetadata({ params }: { params: Promise<{slug: string}> }): Promise<Metadata> { const product = getProduct((await params).slug); return product ? {title: product.name, description: product.description} : {}; }
+
+export async function generateMetadata({ params }: { params: Promise<{slug: string}> }): Promise<Metadata> {
+  const product = getProduct((await params).slug);
+  if (!product) return {};
+
+  const title = product.name;
+  const description = product.description;
+  const url = `/producto/${product.slug}`;
+  const images = [{ url: product.image, width: 1200, height: 1500, alt: `${product.name}, ${product.color}` }];
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: "website", images },
+    twitter: { card: "summary_large_image", title, description, images: [product.image] },
+  };
+}
 
 export default async function ProductPage({ params }: { params: Promise<{slug: string}> }) {
   const product = getProduct((await params).slug);
   if (!product) notFound();
   const relatedProducts = products.filter(({ slug }) => slug !== product.slug).slice(0, 3);
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image: [product.image],
+    sku: product.slug,
+    category: product.category,
+    color: product.color,
+    brand: { "@type": "Brand", name: "VÄLR" },
+    offers: {
+      "@type": "Offer",
+      url: `/producto/${product.slug}`,
+      priceCurrency: "EUR",
+      price: product.price.toFixed(2),
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+  };
+
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <SiteHeader />
       <section className="product-page">
         <ProductGallery image={product.image} name={product.name} color={product.color} imagePosition={product.imagePosition} />

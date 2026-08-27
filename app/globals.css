@@ -147,6 +147,9 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 1px solid 
 .newsletter input { min-width: 0; flex: 1; padding: 12px 0; border: 0; outline: 0; color: var(--bone); background: transparent; font-size: .72rem; }
 .newsletter div:focus-within { border-color: var(--brand); }
 .newsletter button { border: 0; color: var(--gold); background: none; cursor: pointer; }
+.newsletter input:disabled, .newsletter button:disabled { opacity: .4; cursor: not-allowed; }
+.newsletter-note { min-height: 1.4em; margin: 10px 0 0; color: var(--sage); font-size: .62rem; letter-spacing: .02em; }
+.newsletter-note.error { color: #d7a49a; }
 .footer-bottom { min-height: 72px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); color: rgba(168,184,173,.55); font-size: .58rem; letter-spacing: .13em; text-transform: uppercase; }
 
 .motion-ready [data-reveal] { opacity: 0; transition: opacity .85s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms), transform .85s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms), clip-path 1s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms); }
@@ -158,6 +161,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 1px solid 
 .collection-hero-art { position: absolute; inset: 0; opacity: .72; background: radial-gradient(ellipse at 82% 44%, rgba(184,178,168,.15), transparent 18%), radial-gradient(ellipse at 66% 72%, rgba(82,15,2,.14), transparent 28%), linear-gradient(112deg, rgba(5,5,5,.98) 0 42%, rgba(13,13,13,.58) 70%, rgba(5,5,5,.9)), url("/images/odin-editorial-hero-v1.webp") center / cover; filter: grayscale(.35); transform: scale(1.02); }
 .collection-hero-content { position: relative; z-index: 1; animation: editorial-enter .9s ease both; }
 .collection-hero h1 { font-size: clamp(5rem, 9vw, 9rem); }.collection-hero-content > p:last-child { max-width: 530px; margin: 30px 0 0; color: var(--stone); font-size: .96rem; line-height: 1.8; }
+.not-found-hero { min-height: 480px; padding: 170px 0 90px; }.not-found-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); }.not-found-hero .underlined-link { display: inline-block; margin-top: 30px; }
 .collection-transition .drop-transition-inner { min-height: 105px; }
 .collection-body { padding: 75px 0 175px; background: radial-gradient(circle at 95% 8%, rgba(184,178,168,.04), transparent 26rem), var(--ink-soft); }
 .collection-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 58px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
