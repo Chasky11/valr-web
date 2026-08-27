@@ -35,6 +35,17 @@ export class ShopifyCheckoutError extends Error {
   }
 }
 
+export class ShopifyNewsletterError extends Error {
+  constructor(
+    message: string,
+    readonly code: string,
+    readonly status: number,
+  ) {
+    super(message);
+    this.name = "ShopifyNewsletterError";
+  }
+}
+
 function parseVariantMap(): VariantMap | null {
   const rawMap = process.env.SHOPIFY_VARIANT_MAP;
   if (!rawMap) return null;
@@ -89,6 +100,103 @@ export function isShopifyCheckoutConfigured() {
   } catch {
     return false;
   }
+}
+
+// La newsletter solo necesita el dominio de la tienda + un token de Admin API
+// (distinto del token de Storefront que usa el checkout): no depende del
+// variantMap, así que se valida por separado.
+function getAdminConfig() {
+  const storeDomain = process.env.SHOPIFY_STORE_DOMAIN;
+  const adminToken = process.env.SHOPIFY_ADMIN_API_TOKEN;
+
+  if (!storeDomain || !adminToken) {
+    throw new ShopifyNewsletterError(
+      "La newsletter todavía no está configurada.",
+      "newsletter_not_configured",
+      503,
+    );
+  }
+
+  return {
+    storeDomain: normalizeStoreDomain(storeDomain),
+    apiVersion: process.env.SHOPIFY_ADMIN_API_VERSION || DEFAULT_API_VERSION,
+    adminToken,
+  };
+}
+
+export function isShopifyNewsletterConfigured() {
+  try {
+    getAdminConfig();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type ShopifyCustomerCreateResponse = {
+  data?: {
+    customerCreate?: {
+      customer?: { id: string } | null;
+      userErrors: Array<{ field?: string[] | null; message: string }>;
+    };
+  };
+  errors?: Array<{ message: string }>;
+};
+
+export async function subscribeToNewsletter(rawEmail: unknown) {
+  const email = typeof rawEmail === "string" ? rawEmail.trim().toLowerCase() : "";
+  if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
+    throw new ShopifyNewsletterError("Introduce un correo electrónico válido.", "invalid_email", 400);
+  }
+
+  const config = getAdminConfig();
+
+  const response = await fetch(`https://${config.storeDomain}/admin/api/${config.apiVersion}/graphql.json`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": config.adminToken,
+    },
+    cache: "no-store",
+    body: JSON.stringify({
+      query: `
+        mutation SubscribeValrNewsletter($input: CustomerInput!) {
+          customerCreate(input: $input) {
+            customer { id }
+            userErrors { field message }
+          }
+        }
+      `,
+      variables: {
+        input: {
+          email,
+          emailMarketingConsent: { marketingState: "SUBSCRIBED", marketingOptInLevel: "SINGLE_OPT_IN" },
+        },
+      },
+    }),
+  });
+
+  const payload = await response.json().catch(() => null) as ShopifyCustomerCreateResponse | null;
+  if (!response.ok || !payload) {
+    throw new ShopifyNewsletterError("Shopify no ha podido procesar la suscripción.", "shopify_unavailable", 502);
+  }
+
+  const apiError = payload.errors?.[0]?.message;
+  if (apiError) {
+    throw new ShopifyNewsletterError(apiError, "shopify_error", 502);
+  }
+
+  const userErrors = payload.data?.customerCreate?.userErrors ?? [];
+  const alreadySubscribed = userErrors.some((error) => /taken|exists/i.test(error.message));
+  if (userErrors.length > 0 && !alreadySubscribed) {
+    throw new ShopifyNewsletterError(userErrors[0].message, "shopify_user_error", 422);
+  }
+
+  // Un email ya existente cuenta como éxito de cara a quien se suscribe:
+  // no tiene por qué saber que ya estaba en la lista.
+  return { alreadySubscribed };
 }
 
 function validateItems(value: unknown): CheckoutItem[] {

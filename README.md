@@ -45,3 +45,13 @@ La tienda usa Server Components por defecto, imágenes locales optimizadas, ruta
 6. Añade las mismas variables a Vercel para Preview y Production.
 
 Hasta completar esas variables, la bolsa funciona normalmente y muestra el checkout como “en configuración”. El token es utilizado exclusivamente en el servidor y nunca se expone al navegador.
+
+## Activar la newsletter del footer
+
+El formulario "Únete al clan" crea/actualiza clientes con consentimiento de marketing usando la Admin API de Shopify (no la Storefront API del checkout).
+
+1. En Shopify, crea una app personalizada con el scope `write_customers` y genera su token de Admin API.
+2. Completa `SHOPIFY_ADMIN_API_TOKEN` (y opcionalmente `SHOPIFY_ADMIN_API_VERSION`) en `.env.local` y en Vercel.
+3. Reutiliza el mismo `SHOPIFY_STORE_DOMAIN` que ya configuraste para el checkout.
+
+Hasta completar `SHOPIFY_ADMIN_API_TOKEN`, el formulario se muestra deshabilitado con el aviso “Muy pronto”. Un email que ya existe en Shopify se trata como éxito (no revela al visitante que ya estaba suscrito).
